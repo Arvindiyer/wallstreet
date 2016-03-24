@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="udan_vsm" uuid="246391ff-ef28-4782-97ec-94f311d466af">
+    <database-info product="MySQL" version="5.6.21" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="udan_vsm"/>
+    <table name="admin" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="user_id" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="repass" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <index name="user_id" unique="true" columns="user_id,url"/>
+    </table>
+    <table name="comp" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rate" sqlType="FLOAT" precision="100" scale="2" nullable="false" jdbcType="7"/>
+      <column name="share" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="type" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="group" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="per_change" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="NQ=="/>
+      <column name="circuit_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="circuit" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MTU="/>
+      <column name="broker_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+    </table>
+    <table name="last_transaction" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rate" sqlType="FLOAT" precision="100" scale="2" nullable="false" jdbcType="7" def="MC4wMA=="/>
+      <column name="share" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="buy" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MC4wMA=="/>
+      <column name="sell" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MC4wMA=="/>
+      <column name="trades" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="high" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MC4wMA=="/>
+      <column name="low" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MC4wMA=="/>
+    </table>
+    <table name="main_stock" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="player" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="part_no" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="stock" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MTAwMDAwMC4wMA=="/>
+      <column name="axisbank" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="bajajauto" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="bhartiairtel" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="denabank" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="educomp" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="hdfc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="icici" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="infosys" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="larsen" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="ongc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="oraclefinance" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="relcapital" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="relinfra" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="relpower" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="satyam" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="sbi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="tatastl" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="tcs" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="ultratech" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="wipro" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="broker_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="quiz_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="result" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="temp_stock" sqlType="DOUBLE" precision="255" scale="0" nullable="false" jdbcType="8" def="MA=="/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="part_no"/>
+    </table>
+    <table name="news" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="news" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+    </table>
+    <table name="open_stock" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rate" sqlType="FLOAT" precision="100" scale="2" nullable="false" jdbcType="7" def="MTAwLjAw"/>
+      <column name="share" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+    </table>
+    <table name="quiz_question" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="question_no" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ans1" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="ans2" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="ans3" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="ans4" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="right_answer" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="question" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="question_no"/>
+    </table>
+    <table name="status" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <index name="status" unique="true" columns="status"/>
+    </table>
+    <table name="status_message" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="player" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="message" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time" sqlType="TIME" precision="8" scale="0" nullable="false" jdbcType="92"/>
+    </table>
+    <table name="stock" schema="" catalog="udan_vsm" type="TABLE">
+      <column name="player" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="part_no" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="stock" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MTAwMDAwMC4wMA=="/>
+      <column name="axisbank" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="bajajauto" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="bhartiairtel" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="denabank" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="educomp" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="hdfc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="icici" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="infosys" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="larsen" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="ongc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="oraclefinance" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="relcapital" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="relinfra" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="relpower" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="satyam" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="sbi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="tatastl" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="tcs" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="ultratech" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="wipro" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="broker_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="quiz_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="result" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="temp_stock" sqlType="DOUBLE" precision="255" scale="2" nullable="false" jdbcType="8" def="MC4wMA=="/>
+      <index name="player" unique="true" columns="player,stock"/>
+    </table>
+  </data-source>
+</component>
