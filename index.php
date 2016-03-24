@@ -5,6 +5,8 @@
  * Date: 23-Mar-16
  * Time: 12:58 PM
  */
+session_start();
+include_once("php/functions.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,19 +20,13 @@
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-<div class="center">
-    <img src="img/UdaanWing.png" height="80px">
-</div>
 <div class="center name">
-    <img src="img/UdaanName.png" width="180px"><br>
-
+    <img src="img/Logo.png" width="40%"><br>
     <p class="white-text">Presents</p>
-    <img src="img/wall1.png" width="50%">
+    <img src="img/wall1.png" width="40%">
 </div>
-
-
 <div class="bottom-sheet login center">
-    <button class="btn btn-flat blue waves-effect">Login</button>
+    <button class="btn btn-flat blue waves-effect hide">Login</button>
     <p class="white-text show">Game yet to start</p>
 </div>
 
@@ -40,6 +36,7 @@
         <div class="container">
             <p class="center white-text">Made by <a class="orange-text text-lighten-3" href="#">Team Udaan</a>
 
+            <p class="center white-text">Optimized by <a class="orange-text text-lighten-3" href="#">Arvind iyer</a>
             <p>
         </div>
     </div>

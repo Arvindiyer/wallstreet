@@ -24,8 +24,5 @@ body {
 
 .name {
     padding-top: 20px;
-}
-
-.login {
-    margin-top: 1px;
+    font-size: large;
 }
