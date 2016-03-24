@@ -46,7 +46,7 @@ if (mysql_fetch_row($result)) {
     $_SESSION['player'] = $name;
     ?>
     <script type="text/javascript">
-        setTimeout('Redirect()', 1000);
+        setTimeout('Redirect()', 500);
         function Redirect() {
             location.href = 'dashboard.php';
         }

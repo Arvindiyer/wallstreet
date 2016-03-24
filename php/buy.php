@@ -8,7 +8,7 @@
 session_start();
 include("functions.php");
 
-if (isset($_SESSION['player1'])) {
+if (isset($_SESSION['player'])) {
 
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
@@ -47,7 +47,7 @@ if (isset($_SESSION['player1'])) {
         }
         if (!$iserror) {
 
-            $player_name = $_SESSION['player1'];
+            $player_name = $_SESSION['player'];
             $getting = "select part_no from main_stock where player='$player_name'";
             db_connect();
             $rgetting = mysql_query($getting);

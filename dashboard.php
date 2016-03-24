@@ -59,28 +59,39 @@ include_once("php/functions.php");
             </li>
             <li class="no-padding"></li>
             <li class="bold active">
-                <a href='#' class='waves-effect waves-cyan'><i class='mdi-action-dashboard'></i>My Account</a>
+                <a href='#' class='waves-effect waves-cyan page-scroll' page-scroll><i class='mdi-action-dashboard'></i>My
+                    Account</a>
             </li>
             <li class="bold ">
-                <a href='#' class='waves-effect waves-cyan'><i class='mdi-action-explore'></i>How to play</a>
+                <a href='#' class='waves-effect waves-cyan page-scroll'><i class='mdi-action-explore'></i>How to
+                    play</a>
             </li>
             <li class="no-padding"></li>
             <li class="bold ">
-                <a href='#' class='waves-effect waves-cyan'><i class='mdi-action-announcement'></i>General News</a>
+                <a href='#content1' class='waves-effect waves-cyan page-scroll'><i class='mdi-action-announcement'></i>General
+                    News</a>
             </li>
             <li class="bold ">
-                <a href='#content1' class='waves-effect waves-cyan'><i class='mdi-action-credit-card'></i>Buyer's Place</a>
+                <a href='#content2' class='waves-effect waves-cyan page-scroll'><i class='mdi-action-credit-card'></i>Buyer's
+                    Place</a>
+            </li>
+
+            <li class="bold ">
+                <a href='#content5' class='waves-effect waves-cyan page-scroll'><i
+                        class='mdi-action-add-shopping-cart'></i>Owned Stock</a>
             </li>
             <li class="bold ">
-                <a href='#' class='waves-effect waves-cyan'><i class='mdi-social-group-add'></i>Broker Section</a>
+                <a href='#content3' class='waves-effect waves-cyan page-scroll'><i class='mdi-social-group-add'></i>Broker
+                    Section</a>
             </li>
             <li class="bold ">
-                <a href='#' class='waves-effect waves-cyan'><i class='mdi-action-explore'></i>Transaction Message </a>
+                <a href='#content4' class='waves-effect waves-cyan page-scroll'><i class='mdi-action-explore'></i>Transaction
+                    Message </a>
             </li>
             <li class="li-hover">
                 <div class="divider"></div>
             </li>
-            <li><a href="#"><i class='mdi-content-send'></i>Logout</a>
+            <li><a href="logout.php"><i class='mdi-content-send'></i>Logout</a>
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium  hide-on-large-only"><i
                 class="mdi-navigation-menu"></i></a>
@@ -116,6 +127,60 @@ include_once("php/functions.php");
                     </div>
                 </div>
             </div>
+
+            <!--card stats end-->
+            <!-- //////////////////////////////////////////////////////////////////////////// -->
+        </div>
+        <!--end container-->
+    </section>
+    <!-- START CONTENT -->
+    <section id="content1">
+        <!--start container-->
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center">
+                    <div class="card black darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">General News</span>
+                            <?php
+                            $qu = "select status from status";
+                            db_connect();
+                            $ru = mysql_query($qu);
+                            if (!$ru) {
+                                die(mysql_error());
+                            } else {
+                                while ($quu = mysql_fetch_array($ru)) {
+                                    $status = $quu["status"];
+                                }
+                            }
+                            if ($status == 0) {
+                                $q = "select * from news where name='name'";
+                                db_connect();
+                                $r = mysql_query($q);
+                                if (!$r) {
+                                    die(mysql_error());
+                                } else {
+                                    while ($q_d = mysql_fetch_array($r)) {
+                                        $q1 = $q_d['news'];
+                                        ?>
+                                        <h5 id="news"><?php echo "$q1"; ?></h5>
+                                    <?php
+                                    }
+                                }
+                            } else {
+                                echo "Game yet not strated";
+
+                            }
+                            ?>
+                            <div class="card-action">
+                                <button class='btn btn-small waves-effect green center' onclick="news()">Refresh
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="card-stats">
                 <div class="row">
                     <h1 class="center black-text"></h1>
@@ -129,12 +194,21 @@ include_once("php/functions.php");
                     </div>
                 </div>
             </div>
-            <!--card stats end-->
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-        </div>
         <!--end container-->
     </section>
-    <section id="content1">
+    <script type="text/javascript">
+        var XMLHttpRequestObject = false;
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            XMLHttpRequestObject = new
+                ActiveXObject("Microsoft.XMLHTTP");
+        }
+        function news() {
+            location.href = "dashboard.php";
+        }
+    </script>
+    <section id="content2">
         <!--start container-->
         <div class="container">
             <div class="row">
@@ -404,6 +478,291 @@ include_once("php/functions.php");
             </div>
         </div>
     </div>
+
+    <section id="content5">
+        <!--start container-->
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <h4 class="center">Owned <strong class=" blue-text ">Stock</strong></h4>
+                    <hr>
+                </div>
+                <?php
+                $gett = "select * from main_stock where player='$player'";
+                db_connect();
+                $rgett = mysql_query($gett);
+                $qdgett = mysql_fetch_array($rgett);
+                $stock = $qdgett["stock"];
+                echo "<Table><tr><Td>";
+                $get_comp = "select name from comp order by name limit 0,10";
+                db_connect();
+                $rget_comp = mysql_query($get_comp);
+                $i = 0;
+                echo "<table border=\"1\" width=\"300px\">";
+                echo "<tr style=\"background-color: #929DED;\"><th>Company&nbsp;Name</th><Th>Shares</th></tr>";
+                while ($qdget_comp = mysql_fetch_array($rget_comp)) {
+                    $comp[$i] = $qdget_comp["name"];
+
+                    echo "<tr style=\"background-color:#B8C7C6;\"><td>$comp[$i]</td>";
+                    $share1 = "select $comp[$i] from main_stock where player='$player'";
+                    db_connect();
+                    $rshare = mysql_query($share1);
+                    if (!$rshare) {
+                        die(mysql_error());
+                    } else {
+                        $qdshare = mysql_fetch_array($rshare);
+                        $share2 = $qdshare[0];
+                        echo "<td>$share2</td></tR>";
+                    }
+
+                }
+
+                echo "</table>";
+                echo "</td><tD>";
+                $get_comp = "select name from comp order by name limit 10,10";
+                db_connect();
+                $rget_comp = mysql_query($get_comp);
+                $i = 0;
+                echo "<table border=\"1\" width=\"300px\">";
+                echo "<tr style=\"background-color: #929DED;\"><th>Company&nbsp;Name</th><Th>Shares</th></tr>";
+                while ($qdget_comp = mysql_fetch_array($rget_comp)) {
+                    $comp[$i] = $qdget_comp["name"];
+
+                    echo "<tr style=\"background-color:#B8C7C6;\"><td>$comp[$i]</td>";
+                    $share1 = "select $comp[$i] from main_stock where player='$player'";
+                    db_connect();
+                    $rshare = mysql_query($share1);
+                    if (!$rshare) {
+                        die(mysql_error());
+                    } else {
+                        $qdshare = mysql_fetch_array($rshare);
+                        $share2 = $qdshare[0];
+                        echo "<td>$share2</td></tR>";
+                    }
+
+                }
+
+                echo "</table>";
+                echo "</tD></tr></table>";
+                ?>
+
+            </div>
+        </div>
+        <!--end container-->
+    </section>
+
+    <section id="content3">
+        <!--start container-->
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center">
+                    <div class="card grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Broker Section</span>
+
+                            <div id='broker'>
+                                <?php
+
+                                $qu = "select status from status";
+                                db_connect();
+                                $ru = mysql_query($qu);
+                                if (!$ru) {
+                                    die(mysql_error());
+                                } else {
+                                    while ($quu = mysql_fetch_array($ru)) {
+                                        $status = $quu["status"];
+                                    }
+
+                                }
+                                if ($status == 0) {
+                                    $pl = $_SESSION['player'];
+                                    $q = "select broker_status from main_stock where player='$pl'";
+
+                                    db_connect();
+                                    $r = mysql_query($q);
+                                    if (!$r) {
+                                        die(mysql_error());
+                                    } else {
+                                        while ($q_d = mysql_fetch_array($r)) {
+                                            $q1 = $q_d['broker_status'];
+                                        }
+                                        if ($q1 == 1) {
+                                            $q_bn = "select news from news where name='broker'";
+                                            db_connect();
+                                            $r_bn = mysql_query($q_bn);
+                                            if (!$r_bn) {
+                                                echo "Could not execute query.";
+                                            } else {
+                                                $qdn = mysql_fetch_array($r_bn);
+                                                $bnews = $qdn["news"];
+                                                echo $bnews;
+                                                echo "<br><br><button class='btn btn-small waves-effect green' name=\"buttom\" value=\"Refresh\" onclick=\"broker('broker')\" class=\"button\">Refresh</button>";
+                                                /*echo "Discard Broker :<input type=\"button\" name=\"assign\" id=\"assign\" value=\"Assign\" onclick=\"assign('broker')\"/>";*/
+                                            }
+                                        } else if ($q1 == 0) {
+
+                                            echo "<button class='btn btn-small waves-effect green' name=\"assign\" id=\"assign\" value=\"Assign\" onclick=\"assign('broker')\">Assign</button>";
+                                        }
+                                    }
+                                } else {
+                                    echo "You cant play..Game has been stopped.";
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end container-->
+        </div>
+    </section>
+    <script type="text/javascript">
+        var XMLHttpRequestObject = false;
+
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            XMLHttpRequestObject = new
+                ActiveXObject("Microsoft.XMLHTTP");
+        }
+        function assign(divID) {
+
+            if (XMLHttpRequestObject) {
+
+                var obj = document.getElementById(divID);
+                var temp = 'mohit';
+                var params = "name=" + temp;
+                var queryString = "php/change_b_status.php";
+                XMLHttpRequestObject.open("POST", queryString, true);
+                XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
+                XMLHttpRequestObject.setRequestHeader("Connection", "close");
+                XMLHttpRequestObject.onreadystatechange = function () {
+
+                    if (XMLHttpRequestObject.readyState == 4 &&
+                        XMLHttpRequestObject.status == 200) {
+                        obj.innerHTML = XMLHttpRequestObject.responseText;
+                    }
+                    else {
+
+                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
+                    }
+                }
+
+                XMLHttpRequestObject.send(params);
+            }
+        }
+        function broker(divID) {
+
+            if (XMLHttpRequestObject) {
+
+                var obj = document.getElementById(divID);
+                var temp = 'mohit';
+                var params = "name=" + temp;
+                var queryString = "php/read_news.php";
+                XMLHttpRequestObject.open("POST", queryString, true);
+                XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
+                XMLHttpRequestObject.setRequestHeader("Connection", "close");
+
+                XMLHttpRequestObject.onreadystatechange = function () {
+
+                    if (XMLHttpRequestObject.readyState == 4 &&
+                        XMLHttpRequestObject.status == 200) {
+                        obj.innerHTML = XMLHttpRequestObject.responseText;
+                    }
+                    else {
+
+                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
+                    }
+                }
+
+                XMLHttpRequestObject.send(params);
+            }
+        }
+        function read_news(divID) {
+
+            if (XMLHttpRequestObject) {
+
+                var obj = document.getElementById(divID);
+                var temp = 'mohit';
+                var params = "name=" + temp;
+                var queryString = "php/read_news.php";
+                XMLHttpRequestObject.open("POST", queryString, true);
+                XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
+                XMLHttpRequestObject.setRequestHeader("Connection", "close");
+
+
+                XMLHttpRequestObject.onreadystatechange = function () {
+
+                    if (XMLHttpRequestObject.readyState == 4 &&
+                        XMLHttpRequestObject.status == 200) {
+                        obj.innerHTML = XMLHttpRequestObject.responseText;
+                    }
+                    else {
+
+                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
+                    }
+                }
+
+                XMLHttpRequestObject.send(params);
+            }
+        }
+    </script>
+    <section id="content4">
+        <div class="container">
+            <div class="card black">
+                <div class="card-content white-text ">
+                    <p class="card-title center">Transactions Done So far</p>
+                    <?php
+                    if (isset($_SESSION['player'])) {
+                        $st = "select status from status";
+                        db_connect();
+                        $rt = mysql_query($st);
+                        if (!$rt) {
+                            echo "Could not execute query.";
+                        } else {
+                            $qd = mysql_fetch_array($rt);
+                            $status = $qd["status"];
+                        }
+                        if ($status == 1) {
+                            echo "Game has been stopped.";
+                        } else {
+                            $player_name = $_SESSION['player'];
+                            $getting = "select part_no from main_stock where player='$player_name'";
+                            db_connect();
+                            $rgetting = mysql_query($getting);
+                            $query_data = mysql_fetch_array($rgetting);
+                            $part_no = $query_data["part_no"];
+                            $q = "select * from status_message where player='$part_no' order by time desc";
+                            db_connect();
+                            $r = mysql_query($q);
+                            if (!$r) {
+                                die(mysql_error());
+                            } else {
+                                $i = 0;
+                                while ($qd = mysql_fetch_array($r)) {
+                                    $time = $qd["time"];
+                                    $msg = $qd["message"];
+                                    if ($i == 0) {
+                                        echo "<p><span>Last Message :</span><span style=\"color:blue\">$msg at $time.</span></p><br>";
+                                    } else {
+                                        echo "<p>$msg at $time.</p><br>";
+                                    }
+                                    $i = $i + 1;
+                                }
+                            }
+                        }
+                    } else {
+                        //redirect
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- END MAIN -->
     <!-- START FOOTER -->
