@@ -81,13 +81,10 @@ if ($method == 'POST') {
             <?php
             echo "</tD><td style=\"color:green;\">$open_rate</td>";
         }
-
-
-        echo "<td><a href=\"#\" onclick=\"refresh('tr','$q6','$i')\">Refresh</a>&nbsp;&nbsp;<a href='#' id='ak_sign_in' onClick=\"$.showAkModal('buy.php?name=$q6','$q1',300,200);return false;\">BUY</a>&nbsp;&nbsp;<a href='#' id='ak_sign_in' onClick=\"$.showAkModal('sell.php?name=$q6','$q1',300,200);return false;\">SELL</a></td>";
-
+        echo "<td><button class='btn-floating btn-small waves-effect green' onclick=\"refresh('tr','$q6','$i')\">Refresh</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger' data-target='buys' id='buy' onclick=\"gets('$q6')\">BUY</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger indigo' data-target='sells' id='sell' onclick=\"gets('$q6')\">SELL</a></td>";
+        echo "</tr>";
     }
 } else {
-    echo "You cant come on this page";
     ?>
 
     <script type="text/javascript"><!--

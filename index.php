@@ -76,7 +76,6 @@ else
 <div id="logins" class="modal ">
     <div class="modal-content">
         <h4 class="center">Login</h4>
-
         <div class="row">
             <form class="col s12" action="index.php" method="post">
                 <div class="row">

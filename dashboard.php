@@ -21,97 +21,6 @@ include_once("php/functions.php");
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- jQuery Library -->
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript">
-        var XMLHttpRequestObject = false;
-
-        if (window.XMLHttpRequest) {
-            XMLHttpRequestObject = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            XMLHttpRequestObject = new
-                ActiveXObject("Microsoft.XMLHTTP");
-        }
-        function refresh(divID, comp_name, no) {
-            if (XMLHttpRequestObject) {
-                var s1 = divID + no;
-                var obj = document.getElementById(s1);
-                var params = "name=" + comp_name + "&i=" + no;
-                var queryString = "php/get_data.php";
-                XMLHttpRequestObject.open("POST", queryString, true);
-                XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
-                XMLHttpRequestObject.setRequestHeader("Connection", "close");
-                XMLHttpRequestObject.onreadystatechange = function () {
-                    if (XMLHttpRequestObject.readyState == 4 &&
-                        XMLHttpRequestObject.status == 200) {
-                        obj.innerHTML = XMLHttpRequestObject.responseText;
-                    }
-                    else {
-                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
-                    }
-                }
-
-                XMLHttpRequestObject.send(params);
-            }
-        }
-        function sell(divID, comp_name) {
-            if (XMLHttpRequestObject) {
-                var obj = document.getElementById(divID);
-                var queryString = "sell.php?name=" + comp_name;
-                XMLHttpRequestObject.open("GET", queryString, true);
-                XMLHttpRequestObject.onreadystatechange = function () {
-                    if (XMLHttpRequestObject.readyState == 4 &&
-                        XMLHttpRequestObject.status == 200) {
-                        obj.innerHTML = XMLHttpRequestObject.responseText;
-                    }
-                    else {
-
-                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
-                    }
-                }
-
-                XMLHttpRequestObject.send(null);
-            }
-        }
-
-        function buy(divID, comp_name) {
-            if (XMLHttpRequestObject) {
-                var obj = document.getElementById(divID);
-                var queryString = "php/buy.php?name=" + comp_name;
-                XMLHttpRequestObject.open("GET", queryString, true);
-                XMLHttpRequestObject.onreadystatechange = function () {
-                    if (XMLHttpRequestObject.readyState == 4 &&
-                        XMLHttpRequestObject.status == 200) {
-                        obj.innerHTML = XMLHttpRequestObject.responseText;
-                    }
-                    else {
-                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
-                    }
-                }
-                XMLHttpRequestObject.send(null);
-            }
-        }
-
-        function get(divID, comp_name) {
-            if (XMLHttpRequestObject) {
-                var obj = document.getElementById(divID);
-                var queryString = "get_detail_comp.php?name=" + comp_name;
-                XMLHttpRequestObject.open("GET", queryString, true);
-                XMLHttpRequestObject.onreadystatechange = function () {
-
-                    if (XMLHttpRequestObject.readyState == 4 &&
-                        XMLHttpRequestObject.status == 200) {
-                        obj.innerHTML = XMLHttpRequestObject.responseText;
-                    }
-                    else {
-                        // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
-                    }
-                }
-
-                XMLHttpRequestObject.send(null);
-            }
-        }
-
-    </script>
 
 </head>
 
@@ -207,6 +116,19 @@ include_once("php/functions.php");
                     </div>
                 </div>
             </div>
+            <div id="card-stats">
+                <div class="row">
+                    <h1 class="center black-text"></h1>
+
+                    <div class="col s12 center">
+                        <div class="card ">
+                            <div class="card-content  indigo white-text">
+                                <p id="message" class="card-stats-number">Stock error/success message displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--card stats end-->
             <!-- //////////////////////////////////////////////////////////////////////////// -->
         </div>
@@ -235,20 +157,20 @@ include_once("php/functions.php");
                 db_connect();
                 $r = mysql_query($q);
                 $i = 1;
-
                 ?>
                 <div class="col s12 ">
-                    <table id="data-table-simple" class="responsive-table display" width="100%">
+                    <table id="data-table-simple" class="responsive-table display" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Group</th>
-                            <th>Type</th>
-                            <th>Shares</th>
-                            <th>Rate</th>
-                            <th>Open</th>
+                            <th align="left">Name</th>
+                            <th align="left">Group</th>
+                            <th align="left">Type</th>
+                            <th align="left">Shares</th>
+                            <th align="left">Rate</th>
+                            <th align="left"></th>
+                            <th align="left">Open</th>
                             <th>Action</th>
-                        </tr>
+                            </th></tr>
                         </thead>
                         <tbody>
                         <?php
@@ -319,8 +241,8 @@ include_once("php/functions.php");
                                 }
 
                                 if ($status == 0) {
-                                    echo "<td><a href=\"#\" onclick=\"refresh('tr','$q6','$i')\">Refresh</a>&nbsp;&nbsp;<a href='#' id='ak_sign_in' onClick=\"$.showAkModal('buy.php?name=$q6','$q1',300,200);return false;\">BUY</a>&nbsp;&nbsp;<a href='#' id='ak_sign_in' onClick=\"$.showAkModal('sell.php?name=$q6','$q1',300,200);return false;\">SELL</a></td>";
-                                    echo "</TR>";
+                                    echo "<td><button class='btn-floating btn-small waves-effect green' onclick=\"refresh('tr','$q6','$i')\">Refresh</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger' data-target='buys' id='buy' onclick=\"gets('$q6')\">BUY</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger indigo' data-target='sells' id='sell' onclick=\"gets('$q6')\">SELL</a></td>";
+                                    echo "</tr>";
                                 } else {
                                     echo "</tr>";
                                 }
@@ -328,6 +250,108 @@ include_once("php/functions.php");
                             $i = $i + 1;
                         }
                         ?>
+                        <script type="text/javascript">
+                            var XMLHttpRequestObject = false;
+                            var msgs;
+                            if (window.XMLHttpRequest) {
+                                XMLHttpRequestObject = new XMLHttpRequest();
+                            } else if (window.ActiveXObject) {
+                                XMLHttpRequestObject = new
+                                    ActiveXObject("Microsoft.XMLHTTP");
+                            }
+                            function refresh(divID, comp_name, no) {
+                                if (XMLHttpRequestObject) {
+                                    var s1 = divID + no;
+                                    var obj = document.getElementById(s1);
+                                    var params = "name=" + comp_name + "&i=" + no;
+                                    var queryString = "php/get_data.php";
+                                    XMLHttpRequestObject.open("POST", queryString, true);
+                                    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                    XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
+                                    XMLHttpRequestObject.setRequestHeader("Connection", "close");
+                                    XMLHttpRequestObject.onreadystatechange = function () {
+                                        if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+                                            location.href = 'dashboard.php';
+                                        }
+                                        else {
+                                            // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
+                                        }
+                                    }
+
+                                    XMLHttpRequestObject.send(params);
+                                }
+                            }
+                            function gets(value) {
+                                localStorage.setItem("name", value);
+                                //console.log(value);
+                            }
+                            function buy() {
+                                if (XMLHttpRequestObject) {
+                                    var obj = document.getElementById("message");
+                                    var x = document.getElementById('share').value;
+                                    var y = localStorage.getItem("name");
+                                    console.log(x);
+                                    console.log(y);
+                                    var params = "name=" + y + "&share=" + x;
+                                    var queryString = "php/buy.php";
+                                    XMLHttpRequestObject.open("POST", queryString, true);
+                                    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                    XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
+                                    XMLHttpRequestObject.setRequestHeader("Connection", "close");
+                                    XMLHttpRequestObject.onreadystatechange = function () {
+                                        if (XMLHttpRequestObject.readyState == 4 &&
+                                            XMLHttpRequestObject.status == 200) {
+                                            // msgs=localStorage.getItem("message");
+                                            //console.log("In xml block");
+                                            obj.innerHTML = XMLHttpRequestObject.responseText;
+                                            console.log(obj);
+                                            $('#buys').closeModal();
+                                            //location.href = 'dashboard.php';
+                                        }
+                                        else {
+                                            //var msg=localStorage.getItem("message");
+                                            //document.getElementById("message").innerHTML = msg;
+                                            // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
+                                        }
+                                    };
+                                    XMLHttpRequestObject.send(params);
+                                    //XMLHttpRequestObject.open("GET","php/buy.php?name="+y,true);
+                                    //XMLHttpRequestObject.send();
+
+                                }
+                            }
+
+                            function sell() {
+                                if (XMLHttpRequestObject) {
+
+                                    var obj = document.getElementById("message");
+                                    var x = document.getElementById('sell-share').value;
+                                    var y = localStorage.getItem("name");
+                                    console.log(x);
+                                    console.log(y);
+                                    var params = "name=" + y + "&share=" + x;
+                                    var queryString = "php/sell.php";
+                                    XMLHttpRequestObject.open("POST", queryString, true);
+                                    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                    XMLHttpRequestObject.setRequestHeader("Content-length", params.length);
+                                    XMLHttpRequestObject.setRequestHeader("Connection", "close");
+                                    XMLHttpRequestObject.onreadystatechange = function () {
+                                        if (XMLHttpRequestObject.readyState == 4 &&
+                                            XMLHttpRequestObject.status == 200) {
+                                            obj.innerHTML = XMLHttpRequestObject.responseText;
+                                            console.log(obj);
+                                            $('#sells').closeModal();
+                                            //location.href = 'dashboard.php';
+                                        }
+                                        else {
+                                            // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
+                                        }
+                                    }
+                                    XMLHttpRequestObject.send(params);
+                                }
+                            }
+                        </script>
+
                         </tbody>
                     </table>
                 </div>
@@ -336,6 +360,50 @@ include_once("php/functions.php");
         <!--end container-->
     </section>
 
+    <div id="buys" class="modal">
+        <div class="modal-content">
+            <h4 class="center">Buy shares</h4>
+
+            <div class="row">
+                <div class="col s12" id="buyer">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="share" type="text" class="validate" required="" name="share">
+                            <label for="share" data-error="wrong" data-success="right">Share</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 center">
+                            <button class="btn waves-effect waves-light center" onclick="buy()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sells" class="modal">
+        <div class="modal-content">
+            <h4 class="center">Sell shares</h4>
+
+            <div class="row">
+                <div class="col s12" id="seller">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="sell-share" type="text" class="validate" required="" name="share">
+                            <label for="share" data-error="wrong" data-success="right">Share</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 center">
+                            <button class="btn waves-effect waves-light center" name="submit" onclick="sell()">Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- END MAIN -->
     <!-- START FOOTER -->
