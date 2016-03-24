@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="963879873">
-    <data-source source="LOCAL" name="udaan_vsm" uuid="246391ff-ef28-4782-97ec-94f311d466af">
+  <component name="DataSourceManagerImpl" format="xml" hash="132661438">
+    <data-source source="LOCAL" name="udan_vsm" uuid="246391ff-ef28-4782-97ec-94f311d466af">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
