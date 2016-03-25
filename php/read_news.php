@@ -3,12 +3,12 @@ session_start();
 include_once("functions.php");
 extract($_POST);
 $q = "select news from news where name='broker'";
-db_connect();
-$r = mysql_query($q);
+$connect = db_connect();
+$r = mysqli_query($connect, $q);
 if (!$r) {
     echo "Could not execute query.";
 } else {
-    $qd = mysql_fetch_array($r);
+    $qd = mysqli_fetch_array($r);
     $bn = $qd["news"];
     echo "$bn";
 }

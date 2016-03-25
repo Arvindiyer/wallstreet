@@ -6,8 +6,8 @@ if (isset($_SESSION['player'])) {
     $pl = $_SESSION['player'];
     $n = 1;
     $q = "update main_stock set broker_status='$n' where player='$pl'";
-    db_connect();
-    $r = mysql_query($q);
+    $connect = db_connect();
+    $r = mysqli_query($connect, $q);
     if (!$r) {
         echo "Could not execute query.";
     } else {

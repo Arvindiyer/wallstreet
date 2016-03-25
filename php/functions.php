@@ -6,23 +6,24 @@
  * Time: 1:30 PM
  */
 
+
 function db_connect()
 {
-    if (!$connect = mysql_connect("localhost", "root", ""))
+    if (!$connect = mysqli_connect("localhost", "root", ""))
         die("Sorry could not connect to the server.");
-    if (!$db = mysql_select_db("udan_vsm", $connect))
-        die("Sorry could not connect to the database");
-}
+    if (!$db = mysqli_select_db($connect, "udan_vsm")) ;
 
+    return $connect;
+}
 function up($rate, $share, $count_stock, $name)
 {
     $get_detail = "select * from last_transaction where name='$name'";
-    db_connect();
-    $rget_detail = mysql_query($get_detail);
+    $connect = db_connect();
+    $rget_detail = mysqli_query($connect, $get_detail);
     if (!$rget_detail) {
         echo "Could not execute query.";
     } else {
-        $qdget_detail = mysql_fetch_array($rget_detail);
+        $qdget_detail = mysqli_fetch_array($rget_detail);
         $trades = $qdget_detail["trades"];
         $sell = $qdget_detail["sell"];
         $high = $qdget_detail["high"];
@@ -38,8 +39,8 @@ function up($rate, $share, $count_stock, $name)
     $sell = $sell + $count_stock;
     $trades = $trades + 1;
     $update_last = "update last_transaction set rate='$rate',high='$high',low='$low',share='$share',sell='$sell',trades='$trades' where name='$name'";
-    db_connect();
-    $rupdate_last = mysql_query($update_last);
+    $connect = db_connect();
+    $rupdate_last = mysqli_query($connect, $update_last);
     if (!$rupdate_last) {
         echo "Could not execute query.";
     } else {
@@ -47,8 +48,8 @@ function up($rate, $share, $count_stock, $name)
         //$rate=$rate-$t;
 
         $upp = "update comp set rate='$rate' where name='$name'";
-        db_connect();
-        $rupp = mysql_query($upp);
+        $connect = db_connect();
+        $rupp = mysqli_query($connect, $upp);
         if (!$rupp) {
             echo "Could not execute query.";
         } else {
@@ -61,12 +62,12 @@ function up($rate, $share, $count_stock, $name)
 function up_buy($rate, $share, $count_stock, $name)
 {
     $get = "select * from last_transaction where name='$name'";
-    db_connect();
-    $rget = mysql_query($get);
+    $connect = db_connect();
+    $rget = mysqli_query($connect, $get);
     if (!$rget) {
         echo "Could not execute query.";
     } else {
-        while ($qdget = mysql_fetch_array($rget)) {
+        while ($qdget = mysqli_fetch_array($rget)) {
             $trades = $qdget["trades"];
             $buy = $qdget["buy"];
             $high = $qdget["high"];
@@ -82,16 +83,16 @@ function up_buy($rate, $share, $count_stock, $name)
     $buy = $buy + $count_stock;
     $trades = $trades + 1;
     $update_last = "update last_transaction set rate='$rate',high='$high',low='$low',share='$share',buy='$buy',trades='$trades' where name='$name'";
-    db_connect();
-    $rupdate_last = mysql_query($update_last);
+    $connect = db_connect();
+    $rupdate_last = mysqli_query($connect, $update_last);
     if (!$rupdate_last) {
         echo "Could not execute query.";
     } else {
         //$t=$share*$rate*0.001;
         //$rate=$rate+$t;
         $upp = "update comp set rate='$rate' where name='$name'";
-        db_connect();
-        $rupp = mysql_query($upp);
+        $connect = db_connect();
+        $rupp = mysqli_query($connect, $upp);
         if (!$rupp) {
             echo "Could not execute query.";
         } else {
@@ -103,16 +104,16 @@ function up_buy($rate, $share, $count_stock, $name)
 function update_circuit($name)
 {
     $qu = "update comp set circuit_status=1 where name='$name'";
-    db_connect();
-    $ru = mysql_query($qu);
+    $connect = db_connect();
+    $ru = mysqli_query($connect, $qu);
     if (!$ru) {
         echo "Could not execute query.";
     } else {
         $clr = "delete from $name";
-        db_connect();
-        $rclr = mysql_query($clr);
+        $connect = db_connect();
+        $rclr = mysqli_query($connect, $clr);
         if (!$rclr) {
-            die(mysql_error());
+            die(mysqli_error($connect));
         } else {
         }
     }

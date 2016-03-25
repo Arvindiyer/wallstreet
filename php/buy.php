@@ -26,37 +26,37 @@ if (isset($_SESSION['player'])) {
             echo "You cant buy more than 500 shares";
         }*/
         $q_rate = "select rate from open_stock where name='$name'";
-        db_connect();
-        $r_rate = mysql_query($q_rate);
+        $connect = db_connect();
+        $r_rate = mysqli_query($connect, $q_rate);
         if (!$r_rate) {
             echo "Could not execute query.";
         } else {
-            $qdrate = mysql_fetch_array($r_rate);
+            $qdrate = mysqli_fetch_array($r_rate);
             $open_rate1 = $qdrate["rate"];
         }
 
 
         $q_rate = "select rate from comp where name='$name'";
-        db_connect();
-        $r_rate = mysql_query($q_rate);
+        $connect = db_connect();
+        $r_rate = mysqli_query($connect, $q_rate);
         if (!$r_rate) {
             echo "Could not execute query.";
         } else {
-            $qdrate = mysql_fetch_array($r_rate);
+            $qdrate = mysqli_fetch_array($r_rate);
             $rate = $qdrate["rate"];
         }
         if (!$iserror) {
 
             $player_name = $_SESSION['player'];
             $getting = "select part_no from main_stock where player='$player_name'";
-            db_connect();
-            $rgetting = mysql_query($getting);
-            $query_data = mysql_fetch_array($rgetting);
+            $connect = db_connect();
+            $rgetting = mysqli_query($connect, $getting);
+            $query_data = mysqli_fetch_array($rgetting);
             $part_no = $query_data["part_no"];
             $q2 = "select * from main_stock where part_no='$part_no'";
-            db_connect();
-            $r2 = mysql_query($q2);
-            $qd2 = mysql_fetch_array($r2);
+            $connect = db_connect();
+            $r2 = mysqli_query($connect, $q2);
+            $qd2 = mysqli_fetch_array($r2);
             $your_stock = $qd2["stock"];
             $broker_status = $qd2["broker_status"];
             $share_of = $qd2["$name"];
@@ -69,12 +69,12 @@ if (isset($_SESSION['player'])) {
             } else {
 
                 $q1 = "select * from comp where name='$name'";
-                db_connect();
-                $r1 = mysql_query($q1);
+                $connect = db_connect();
+                $r1 = mysqli_query($connect, $q1);
                 if (!$r1) {
                     echo "Could not execute query.";
                 } else {
-                    $qd1 = mysql_fetch_array($r1);
+                    $qd1 = mysqli_fetch_array($r1);
                     $main_rate = $qd1["rate"];
                     $comp_broker = $qd1["broker_status"];
                     $share_comp = $qd1["share"];
@@ -94,8 +94,8 @@ if (isset($_SESSION['player'])) {
                         echo "You do not have enough stock.";
                     } else {
                         $up_player = "update main_stock set stock='$stock',$name='$share_of' where part_no='$part_no'";
-                        db_connect();
-                        $rup_player = mysql_query($up_player);
+                        $connect = db_connect();
+                        $rup_player = mysqli_query($connect, $up_player);
                         if (!$rup_player) {
                             echo "Could not execute query.";
                         } else {
@@ -106,16 +106,16 @@ if (isset($_SESSION['player'])) {
 
 
                             $upp = "update comp set rate='$rate',share='$temp_share' where name='$name'";
-                            db_connect();
-                            $rupp = mysql_query($upp);
+                            $connect = db_connect();
+                            $rupp = mysqli_query($connect, $upp);
                             if (!$rupp) {
                                 echo "Could not execute query.";
                             } else {
                                 echo "Transaction completed for $share of $name";
                                 $msg = 'Transaction completed for ' . $share . ' shares of ' . $name . ' with rate Rs. ' . $temp;
                                 $insert_status = "insert into status_message(player,message,time) values ('$part_no','$msg',CURTIME())";
-                                db_connect();
-                                $rinsert_status = mysql_query($insert_status);
+                                $connect = db_connect();
+                                $rinsert_status = mysqli_query($connect, $insert_status);
                                 if (!$insert_status) {
                                     echo "Could not execute query.";
                                 } else {

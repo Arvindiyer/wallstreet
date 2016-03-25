@@ -35,18 +35,18 @@ if (!isset($_SESSION['player'])) {
     extract($_POST);
 if (isset($submit)) {
     $query = "select * from main_stock where player='$name' AND password='$password'";
-    db_connect();
-    $result = mysql_query($query);
+    $connect = db_connect();
+    $result = mysqli_query($connect, $query);
 if (!$result) {
     echo "Query error"; //
 }
 else {
-if (mysql_fetch_row($result)) {
+if (mysqli_fetch_row($result)) {
     $ans = mysqli_fetch_array($result);
     $_SESSION['player'] = $name;
     ?>
     <script type="text/javascript">
-        setTimeout('Redirect()', 500);
+        setTimeout('Redirect()', 1000);
         function Redirect() {
             location.href = 'dashboard.php';
         }
@@ -101,13 +101,13 @@ else
 </div>
 
 <?php
-db_connect();
+$connect = db_connect();
     $status = "SELECT status FROM status";
-    $result = mysql_query($status);
+$result = mysqli_query($connect, $status);
     if (!$result) {
         echo "Could not execute query.";
     } else {
-        $ans = mysql_fetch_array($result);
+        $ans = mysqli_fetch_array($result);
         if (!$ans['status']) {
             ?>
             <script type="text/javascript">
@@ -134,7 +134,8 @@ db_connect();
                                                              href="http://udaan16.in/">Team Udaan</a></p>
 
     <p class="center-align white-text"> Credits to senior Mohit Shah and Optimized by <a
-            class="orange-text text-lighten-3" href="https://github.com/arvindiyer">Arvind iyer</a></p>
+            class="orange-text text-lighten-3"
+            href="http://team-udaan.github.io/udaan16-static/key-coders.html#Branch Heads">Team Keycoders</a></p>
     </div>
 
 

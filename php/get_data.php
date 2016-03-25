@@ -13,9 +13,9 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method == 'POST') {
     extract($_POST);
     $q = "select * from comp where name='$name'";
-    db_connect();
-    $r = mysql_query($q);
-    $q_d = mysql_fetch_array($r);
+    $connect = db_connect();
+    $r = mysqli_query($connect, $q);
+    $q_d = mysqli_fetch_array($r);
     $q1 = $q_d["name"];
     $q2 = $q_d["group"];
     $q3 = $q_d["rate"];
@@ -25,20 +25,20 @@ if ($method == 'POST') {
     $q6 = strtolower($q1);
     $q7 = strtoupper($q1);
     $qq = "select rate from open_stock where name='$q1'";
-    db_connect();
-    $rr = mysql_query($qq);
+    $connect = db_connect();
+    $rr = mysqli_query($connect, $qq);
     if (!$rr) {
     } else {
-        while ($qd = mysql_fetch_array($rr)) {
+        while ($qd = mysqli_fetch_array($rr)) {
             $open_rate = $qd["rate"];
         }
     }
     $qhigh = "select * from last_transaction where name='$q1'";
-    db_connect();
-    $rhigh = mysql_query($qhigh);
+    $connect = db_connect();
+    $rhigh = mysqli_query($connect, $qhigh);
     if (!$rhigh) {
     } else {
-        $qdhigh = mysql_fetch_array($rhigh);
+        $qdhigh = mysqli_fetch_array($rhigh);
         $high = $qdhigh["high"];
         $low = $qdhigh["low"];
     }

@@ -19,6 +19,7 @@ include_once("php/functions.php");
     <!-- CORE CSS-->
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link rel="stylesheet" href="css/hopscotch.css">
     <!-- jQuery Library -->
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 
@@ -31,7 +32,7 @@ include_once("php/functions.php");
     <div class="navbar-fixed page-topbar">
         <nav class="black darken-4">
             <div class="nav-wrapper">
-                <ul class="left">
+                <ul class="left" id="trefresh">
                     <li><h1 class="logo-wrapper"><a href="#" class="brand-logo darken-1"><img src="img/wall1.png"
                                                                                               width="20%"></a></h1></li>
                 </ul>
@@ -59,11 +60,12 @@ include_once("php/functions.php");
             </li>
             <li class="no-padding"></li>
             <li class="bold active">
-                <a href='#' class='waves-effect waves-cyan page-scroll' page-scroll><i class='mdi-action-dashboard'></i>My
+                <a href='#content' class='waves-effect waves-cyan page-scroll' page-scroll><i
+                        class='mdi-action-dashboard'></i>My
                     Account</a>
             </li>
             <li class="bold ">
-                <a href='#' class='waves-effect waves-cyan page-scroll'><i class='mdi-action-explore'></i>How to
+                <a href='#content6' class='waves-effect waves-cyan page-scroll'><i class='mdi-action-explore'></i>How to
                     play</a>
             </li>
             <li class="no-padding"></li>
@@ -100,12 +102,12 @@ include_once("php/functions.php");
     <?php
     $player = $_SESSION['player'];
     $get_info = "select stock from main_stock where player='$player'";
-    db_connect();
-    $get_infos = mysql_query($get_info);
+    $connect = db_connect();
+    $get_infos = mysqli_query($connect, $get_info);
     if (!$get_infos) {
         echo "Could not execute query.";
     } else {
-        $ans = mysql_fetch_array($get_infos);
+        $ans = mysqli_fetch_array($get_infos);
         $stock = $ans["stock"];
     }
     ?>
@@ -121,7 +123,7 @@ include_once("php/functions.php");
                     <div class="col s12 center">
                         <div class="card ">
                             <div class="card-content  indigo white-text">
-                                <h4 class="card-stats-number"><?php echo $stock . ' Rs'; ?></h4>
+                                <h4 class="card-stats-number" id="tnumber"><?php echo $stock . ' Rs'; ?></h4>
                             </div>
                         </div>
                     </div>
@@ -133,6 +135,30 @@ include_once("php/functions.php");
         </div>
         <!--end container-->
     </section>
+
+    <!-- START CONTENT -->
+    <section id="content6">
+        <!--start container-->
+        <div class="container">
+            <!--card stats start-->
+            <div id="card-stats">
+                <div class="row">
+                    <div class="col s12 center">
+                        <div class="card ">
+                            <div class="card-content  indigo white-text">
+                                <h6 class="center ">Press the button to know how to play with 10 easy steps</h6>
+
+                                <p class="text-center">
+                                    <button id="startTourBtn" class="btn btn-large btn-primary">Take a tour</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end container-->
+    </section>
     <!-- START CONTENT -->
     <section id="content1">
         <!--start container-->
@@ -141,26 +167,26 @@ include_once("php/functions.php");
                 <div class="col s12 center">
                     <div class="card black darken-1">
                         <div class="card-content white-text">
-                            <span class="card-title">General News</span>
+                            <span class="card-title" id="tgeneral">General News</span>
                             <?php
                             $qu = "select status from status";
-                            db_connect();
-                            $ru = mysql_query($qu);
+                            $connect = db_connect();
+                            $ru = mysqli_query($connect, $qu);
                             if (!$ru) {
-                                die(mysql_error());
+                                die(mysqli_error($connect));
                             } else {
-                                while ($quu = mysql_fetch_array($ru)) {
+                                while ($quu = mysqli_fetch_array($ru)) {
                                     $status = $quu["status"];
                                 }
                             }
                             if ($status == 0) {
                                 $q = "select * from news where name='name'";
-                                db_connect();
-                                $r = mysql_query($q);
+                                $connect = db_connect();
+                                $r = mysqli_query($connect, $q);
                                 if (!$r) {
-                                    die(mysql_error());
+                                    die(mysqli_error($connect));
                                 } else {
-                                    while ($q_d = mysql_fetch_array($r)) {
+                                    while ($q_d = mysqli_fetch_array($r)) {
                                         $q1 = $q_d['news'];
                                         ?>
                                         <h5 id="news"><?php echo "$q1"; ?></h5>
@@ -183,8 +209,7 @@ include_once("php/functions.php");
             </div>
             <div id="card-stats">
                 <div class="row">
-                    <h1 class="center black-text"></h1>
-
+                    <h1 class="center black-text" id="tmessage"></h1>
                     <div class="col s12 center">
                         <div class="card ">
                             <div class="card-content  indigo white-text">
@@ -213,23 +238,23 @@ include_once("php/functions.php");
         <div class="container">
             <div class="row">
                 <div class="col s12">
-                    <h4 class="center">Buyers<strong class=" blue-text ">Place</strong></h4>
+                    <h4 class="center" id="titems">Buyers<strong class=" blue-text ">Place</strong></h4>
                     <hr>
                 </div>
                 <?php
                 $st = "select status from status";
-                db_connect();
-                $rt = mysql_query($st);
+                $connect = db_connect();
+                $rt = mysqli_query($connect, $st);
                 if (!$rt) {
                     echo "Could not execute query.";
                 } else {
-                    $qd = mysql_fetch_array($rt);
+                    $qd = mysqli_fetch_array($rt);
                     $status = $qd["status"];
                 }
                 $us = $_SESSION['player'];
                 $q = "select *from comp order by name";
-                db_connect();
-                $r = mysql_query($q);
+                $connect = db_connect();
+                $r = mysqli_query($connect, $q);
                 $i = 1;
                 ?>
                 <div class="col s12 ">
@@ -248,7 +273,7 @@ include_once("php/functions.php");
                         </thead>
                         <tbody>
                         <?php
-                        while ($q_d = mysql_fetch_array($r)) {
+                        while ($q_d = mysqli_fetch_array($r)) {
                             $q1 = $q_d["name"];
                             $q2 = $q_d["group"];
                             $q3 = $q_d["rate"];
@@ -258,20 +283,20 @@ include_once("php/functions.php");
                             $q6 = strtolower($q1);
                             $q7 = strtoupper($q1);
                             $qq = "select rate from open_stock where name='$q1'";
-                            db_connect();
-                            $rr = mysql_query($qq);
+                            $connect = db_connect();
+                            $rr = mysqli_query($connect, $qq);
                             if (!$rr) {
                             } else {
-                                while ($qd = mysql_fetch_array($rr)) {
+                                while ($qd = mysqli_fetch_array($rr)) {
                                     $open_rate = $qd["rate"];
                                 }
                             }
                             $qhigh = "select * from last_transaction where name='$q1'";
-                            db_connect();
-                            $rhigh = mysql_query($qhigh);
+                            $connect = db_connect();
+                            $rhigh = mysqli_query($connect, $qhigh);
                             if (!$rhigh) {
                             } else {
-                                $qdhigh = mysql_fetch_array($rhigh);
+                                $qdhigh = mysqli_fetch_array($rhigh);
                                 $high = $qdhigh["high"];
                                 $low = $qdhigh["low"];
                             }
@@ -315,7 +340,7 @@ include_once("php/functions.php");
                                 }
 
                                 if ($status == 0) {
-                                    echo "<td><button class='btn-floating btn-small waves-effect green' onclick=\"refresh('tr','$q6','$i')\">Refresh</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger' data-target='buys' id='buy' onclick=\"gets('$q6')\">BUY</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger indigo' data-target='sells' id='sell' onclick=\"gets('$q6')\">SELL</a></td>";
+                                    echo "<td id='titembuy'><button class='btn-floating btn-small waves-effect green' onclick=\"refresh('tr','$q6','$i')\">Refresh</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger' data-target='buys'  onclick=\"gets('$q6')\">BUY</button>&nbsp;&nbsp;<button class='btn-floating btn-small waves-effect modal-trigger indigo' data-target='sells' id='sell' onclick=\"gets('$q6')\">SELL</a></td>";
                                     echo "</tr>";
                                 } else {
                                     echo "</tr>";
@@ -364,8 +389,8 @@ include_once("php/functions.php");
                                     var obj = document.getElementById("message");
                                     var x = document.getElementById('share').value;
                                     var y = localStorage.getItem("name");
-                                    console.log(x);
-                                    console.log(y);
+                                    // console.log(x);
+                                    //console.log(y);
                                     var params = "name=" + y + "&share=" + x;
                                     var queryString = "php/buy.php";
                                     XMLHttpRequestObject.open("POST", queryString, true);
@@ -375,12 +400,13 @@ include_once("php/functions.php");
                                     XMLHttpRequestObject.onreadystatechange = function () {
                                         if (XMLHttpRequestObject.readyState == 4 &&
                                             XMLHttpRequestObject.status == 200) {
-                                            // msgs=localStorage.getItem("message");
-                                            //console.log("In xml block");
+                                            localStorage.setItem("message", XMLHttpRequestObject.responseText);
+                                            // console.log("In xml block");
                                             obj.innerHTML = XMLHttpRequestObject.responseText;
-                                            console.log(obj);
+                                            // console.log(obj);
                                             $('#buys').closeModal();
-                                            //location.href = 'dashboard.php';
+                                            location.href = 'dashboard.php';
+
                                         }
                                         else {
                                             //var msg=localStorage.getItem("message");
@@ -401,8 +427,8 @@ include_once("php/functions.php");
                                     var obj = document.getElementById("message");
                                     var x = document.getElementById('sell-share').value;
                                     var y = localStorage.getItem("name");
-                                    console.log(x);
-                                    console.log(y);
+                                    // console.log(x);
+                                    // console.log(y);
                                     var params = "name=" + y + "&share=" + x;
                                     var queryString = "php/sell.php";
                                     XMLHttpRequestObject.open("POST", queryString, true);
@@ -412,10 +438,12 @@ include_once("php/functions.php");
                                     XMLHttpRequestObject.onreadystatechange = function () {
                                         if (XMLHttpRequestObject.readyState == 4 &&
                                             XMLHttpRequestObject.status == 200) {
-                                            obj.innerHTML = XMLHttpRequestObject.responseText;
+                                            localStorage.setItem("message", XMLHttpRequestObject.responseText);
+                                            //   console.log("In xml block");
+                                            //   obj.innerHTML = XMLHttpRequestObject.responseText;
                                             console.log(obj);
                                             $('#sells').closeModal();
-                                            //location.href = 'dashboard.php';
+                                            location.href = 'dashboard.php';
                                         }
                                         else {
                                             // obj.innerHTML="<div style=\"margin-left:100px;\"><img src=\"loading.gif\"/></div>";
@@ -484,58 +512,56 @@ include_once("php/functions.php");
         <div class="container">
             <div class="row">
                 <div class="col s12">
-                    <h4 class="center">Owned <strong class=" blue-text ">Stock</strong></h4>
+                    <h4 class="center" id="towned">Owned <strong class=" blue-text ">Stock</strong></h4>
                     <hr>
                 </div>
                 <?php
                 $gett = "select * from main_stock where player='$player'";
-                db_connect();
-                $rgett = mysql_query($gett);
-                $qdgett = mysql_fetch_array($rgett);
+                $connect = db_connect();
+                $rgett = mysqli_query($connect, $gett);
+                $qdgett = mysqli_fetch_array($rgett);
                 $stock = $qdgett["stock"];
                 echo "<Table><tr><Td>";
                 $get_comp = "select name from comp order by name limit 0,10";
-                db_connect();
-                $rget_comp = mysql_query($get_comp);
+                $connect = db_connect();
+                $rget_comp = mysqli_query($connect, $get_comp);
                 $i = 0;
-                echo "<table border=\"1\" width=\"300px\">";
+                echo "<table border=\"1\" width=\"280px\" >";
                 echo "<tr style=\"background-color: #929DED;\"><th>Company&nbsp;Name</th><Th>Shares</th></tr>";
-                while ($qdget_comp = mysql_fetch_array($rget_comp)) {
+                while ($qdget_comp = mysqli_fetch_array($rget_comp)) {
                     $comp[$i] = $qdget_comp["name"];
-
                     echo "<tr style=\"background-color:#B8C7C6;\"><td>$comp[$i]</td>";
                     $share1 = "select $comp[$i] from main_stock where player='$player'";
-                    db_connect();
-                    $rshare = mysql_query($share1);
+                    $connect = db_connect();
+                    $rshare = mysqli_query($connect, $share1);
                     if (!$rshare) {
-                        die(mysql_error());
+                        die(mysqli_error($connect));
                     } else {
-                        $qdshare = mysql_fetch_array($rshare);
+                        $qdshare = mysqli_fetch_array($rshare);
                         $share2 = $qdshare[0];
                         echo "<td>$share2</td></tR>";
                     }
 
                 }
-
                 echo "</table>";
                 echo "</td><tD>";
                 $get_comp = "select name from comp order by name limit 10,10";
-                db_connect();
-                $rget_comp = mysql_query($get_comp);
+                $connect = db_connect();
+                $rget_comp = mysqli_query($connect, $get_comp);
                 $i = 0;
-                echo "<table border=\"1\" width=\"300px\">";
+                echo "<table border=\"1\" width=\"280px\" >";
                 echo "<tr style=\"background-color: #929DED;\"><th>Company&nbsp;Name</th><Th>Shares</th></tr>";
-                while ($qdget_comp = mysql_fetch_array($rget_comp)) {
+                while ($qdget_comp = mysqli_fetch_array($rget_comp)) {
                     $comp[$i] = $qdget_comp["name"];
 
                     echo "<tr style=\"background-color:#B8C7C6;\"><td>$comp[$i]</td>";
                     $share1 = "select $comp[$i] from main_stock where player='$player'";
-                    db_connect();
-                    $rshare = mysql_query($share1);
+                    $connect = db_connect();
+                    $rshare = mysqli_query($connect, $share1);
                     if (!$rshare) {
-                        die(mysql_error());
+                        die(mysqli_error($connect));
                     } else {
-                        $qdshare = mysql_fetch_array($rshare);
+                        $qdshare = mysqli_fetch_array($rshare);
                         $share2 = $qdshare[0];
                         echo "<td>$share2</td></tR>";
                     }
@@ -558,18 +584,18 @@ include_once("php/functions.php");
                 <div class="col s12 center">
                     <div class="card grey darken-1">
                         <div class="card-content white-text">
-                            <span class="card-title">Broker Section</span>
+                            <span class="card-title" id="tbroker">Broker Section</span>
 
                             <div id='broker'>
                                 <?php
 
                                 $qu = "select status from status";
-                                db_connect();
-                                $ru = mysql_query($qu);
+                                $connect = db_connect();
+                                $ru = mysqli_query($connect, $qu);
                                 if (!$ru) {
-                                    die(mysql_error());
+                                    die(mysqli_error($connect));
                                 } else {
-                                    while ($quu = mysql_fetch_array($ru)) {
+                                    while ($quu = mysqli_fetch_array($ru)) {
                                         $status = $quu["status"];
                                     }
 
@@ -578,22 +604,22 @@ include_once("php/functions.php");
                                     $pl = $_SESSION['player'];
                                     $q = "select broker_status from main_stock where player='$pl'";
 
-                                    db_connect();
-                                    $r = mysql_query($q);
+                                    $connect = db_connect();
+                                    $r = mysqli_query($connect, $q);
                                     if (!$r) {
-                                        die(mysql_error());
+                                        die(mysqli_error($connect));
                                     } else {
-                                        while ($q_d = mysql_fetch_array($r)) {
+                                        while ($q_d = mysqli_fetch_array($r)) {
                                             $q1 = $q_d['broker_status'];
                                         }
                                         if ($q1 == 1) {
                                             $q_bn = "select news from news where name='broker'";
-                                            db_connect();
-                                            $r_bn = mysql_query($q_bn);
+                                            $connect = db_connect();
+                                            $r_bn = mysqli_query($connect, $q_bn);
                                             if (!$r_bn) {
                                                 echo "Could not execute query.";
                                             } else {
-                                                $qdn = mysql_fetch_array($r_bn);
+                                                $qdn = mysqli_fetch_array($r_bn);
                                                 $bnews = $qdn["news"];
                                                 echo $bnews;
                                                 echo "<br><br><button class='btn btn-small waves-effect green' name=\"buttom\" value=\"Refresh\" onclick=\"broker('broker')\" class=\"button\">Refresh</button>";
@@ -714,16 +740,16 @@ include_once("php/functions.php");
         <div class="container">
             <div class="card black">
                 <div class="card-content white-text ">
-                    <p class="card-title center">Transactions Done So far</p>
+                    <p class="card-title center" id="ttransaction">Transactions Done So far</p>
                     <?php
                     if (isset($_SESSION['player'])) {
                         $st = "select status from status";
-                        db_connect();
-                        $rt = mysql_query($st);
+                        $connect = db_connect();
+                        $rt = mysqli_query($connect, $st);
                         if (!$rt) {
                             echo "Could not execute query.";
                         } else {
-                            $qd = mysql_fetch_array($rt);
+                            $qd = mysqli_fetch_array($rt);
                             $status = $qd["status"];
                         }
                         if ($status == 1) {
@@ -731,18 +757,18 @@ include_once("php/functions.php");
                         } else {
                             $player_name = $_SESSION['player'];
                             $getting = "select part_no from main_stock where player='$player_name'";
-                            db_connect();
-                            $rgetting = mysql_query($getting);
-                            $query_data = mysql_fetch_array($rgetting);
+                            $connect = db_connect();
+                            $rgetting = mysqli_query($connect, $getting);
+                            $query_data = mysqli_fetch_array($rgetting);
                             $part_no = $query_data["part_no"];
                             $q = "select * from status_message where player='$part_no' order by time desc";
-                            db_connect();
-                            $r = mysql_query($q);
+                            $connect = db_connect();
+                            $r = mysqli_query($connect, $q);
                             if (!$r) {
-                                die(mysql_error());
+                                die(mysqli_error($connect));
                             } else {
                                 $i = 0;
-                                while ($qd = mysql_fetch_array($r)) {
+                                while ($qd = mysqli_fetch_array($r)) {
                                     $time = $qd["time"];
                                     $msg = $qd["message"];
                                     if ($i == 0) {
@@ -770,8 +796,10 @@ include_once("php/functions.php");
         <div class="footer-copyright ">
             <div class="container ">
                 &copy;2016 Team Udaan
-                <span class="right"> Credits to senior Mohit Shah and Optimized by<a
-                        class="orange-text text-lighten-3" href="https://github.com/arvindiyer"> Arvind iyer</a></span>
+                <span class="right" id="tcontact"> Credits to senior Mohit Shah and Optimized by<a id="tcontact"
+                                                                                                   class="orange-text text-lighten-3"
+                                                                                                   href="http://team-udaan.github.io/udaan16-static/key-coders.html#Branch Heads">Team
+                        Keycoders</a></span>
             </div>
         </div>
     </footer>
@@ -787,6 +815,17 @@ include_once("php/functions.php");
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
     <!--Extra-->
     <script type="text/javascript" src="js/plugin.js"></script>
+    <script type="text/javascript">
+        var msg = localStorage.getItem("message");
+        // console.log(msg);
+        var obj = document.getElementById("message");
+        obj.innerHTML = msg;
+        //  console.log(obj);
+
+    </script>
+    <script src="js/hopscotch.js"></script>
+    <script src="js/tour.js"></script>
+    <!-- define and start your tour in this file -->
 
 
 </body>

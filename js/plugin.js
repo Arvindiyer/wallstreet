@@ -47,10 +47,12 @@ $('a.page-scroll').click(function () {
 //sidebar for mobile closing and opening
 $('.sidebar-collapse ').sideNav({
         menuWidth: 240, // Default is 240
-        edge: 'left', // Choose the horizontal origin
-        closeOnClick: false // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        // edge: 'left', // Choose the horizontal origin
+        // closeOnClick: true// Closes side-nav on <a> clicks, useful for Angular/Meteor
+
     }
 );
+$('.sidebar-collapse ').sideNav('hide');
 
 // Materialize Tabs
 $('.tab-demo').show().tabs();
